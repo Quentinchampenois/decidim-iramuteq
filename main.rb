@@ -18,7 +18,7 @@ return puts "File '#{file_name}' seems to be empty" if File.zero? file_name
 iramuteq = DecidimIramuteq.new(file_name)
 
 CSV.foreach(file_name, headers: :first_row, col_sep: ';') do |row|
-  iramuteq.current_line = row.fields
+  iramuteq.current_line = row.to_hash
   iramuteq.write_data!
 end
 

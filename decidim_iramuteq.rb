@@ -36,9 +36,9 @@ class DecidimIramuteq
 
   def proposal_item
     {
-        id: current_line[0],
-        title: current_line[8],
-        body: current_line[9]
+        id: current_line["id"],
+        title: current_line["title"],
+        body: current_line["body"]
     }
   end
 
