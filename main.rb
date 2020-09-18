@@ -11,7 +11,7 @@ file_name = if ARGV.empty?
               ARGV.first
             end
 
-return puts "File '#{file_name}' does not exists" unless File.exist? file_name
+return puts "File '#{file_name}' does not exist" unless File.exist? file_name
 return puts "File '#{file_name}' seems to be empty" if File.zero? file_name
 
 
