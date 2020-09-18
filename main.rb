@@ -6,14 +6,13 @@ require_relative 'decidim_iramuteq'
 
 file_name = if ARGV.empty?
               puts 'No filename provided, please enter file name : '
-              'open_data.csv'
+              gets.chomp
             else
               ARGV.first
             end
 
-
-puts "File '#{file_name}' does not exists" unless File.exist? file_name
-puts "File '#{file_name}' seems to be empty" if File.zero? file_name
+return puts "File '#{file_name}' does not exists" unless File.exist? file_name
+return puts "File '#{file_name}' seems to be empty" if File.zero? file_name
 
 
 iramuteq = DecidimIramuteq.new(file_name)
