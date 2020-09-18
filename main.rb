@@ -51,12 +51,12 @@ class DecidimIramuteq
     row = []
 
     row << line_beginning
-    row + add_key(separator, doubled_separator, :id)
-    row + add_key(separator, doubled_separator, :title)
-    row + add_key(separator, doubled_separator, :body)
+    row << add_key(separator, doubled_separator, :id)
+    row << add_key(separator, doubled_separator, :title)
+    row << add_key(separator, doubled_separator, :body)
     row << line_separator
 
-    row.join('')
+    row.flatten.compact.join('')
   end
 
   def add_key(separator='*', doubled_separator=' ', sym_key)
