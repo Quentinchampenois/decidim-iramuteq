@@ -22,9 +22,9 @@ puts "File '#{file_name}' does not exists" unless File.exist? file_name
 puts "File '#{file_name}' seems to be empty" if File.zero? file_name
 data = File.read file_name
 
-csv_data = CSV.new(data, col_sep: ";")
-
-puts csv_data.readlines
+CSV.parse(data, col_sep: ";") do |line|
+  puts line
+end
 
 
 puts '> EOF'
