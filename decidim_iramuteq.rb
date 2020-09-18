@@ -2,12 +2,14 @@ class DecidimIramuteq
 
   attr_accessor :data_source, :current_line
 
-  def initialize(file_name, format=:CSV)
+  def initialize(file_name, target_dir, format=:CSV)
     @file_name = file_name
+    @target_dir = target_dir
     @format = format
     @formatted_data = []
     @timestamp = Time.now.utc.strftime('%Y%m%d%H%M%S')
     @basename = File.basename(@file_name, '.*')
+    Dir.mkdir(@target_dir) unless File.exists?(@target_dir)
   end
 
   def get_data
@@ -25,7 +27,7 @@ class DecidimIramuteq
 
   def write_data!
     selector = "*"*4
-    File.open("#{@timestamp}_#{@basename}.txt", 'a') { |f|
+    File.open("#{@target_dir}#{@timestamp}_#{@basename}.txt", 'a') { |f|
       f << "#{selector}\n\n"
       f << proposal_item[:body]
       f << "\n\n"

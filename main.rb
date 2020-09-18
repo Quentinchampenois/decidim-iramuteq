@@ -3,24 +3,33 @@
 require 'csv'
 require 'byebug'
 require_relative 'decidim_iramuteq'
+require_relative 'iramu_core'
 
-file_name = if ARGV.empty?
-              puts 'No filename provided, please enter file name : '
-              gets.chomp
-            else
-              ARGV.first
-            end
+dirname = if ARGV.empty?
+            puts 'No filename provided, please enter file name : '
+            gets.chomp
+          else
+            ARGV.first
+          end
 
-return puts "File '#{file_name}' does not exist" unless File.exist? file_name
-return puts "File '#{file_name}' seems to be empty" if File.zero? file_name
+core = IramuCore.new(dirname)
+entries = core.get_entries
 
+entries.each do |file|
+  # TODO: use errors and rescue
 
-iramuteq = DecidimIramuteq.new(file_name)
+  relative_path = core.construct_relative_path(dirname, file)
+  return puts "File '#{relative_path}' does not exist" unless File.exist? relative_path
+  return puts "File '#{relative_path}' seems to be empty" if File.zero? relative_path
+  if File.extname(relative_path) != '.csv'
+    return puts "File '#{relative_path}' invalid extension"
+  end
 
-CSV.foreach(file_name, headers: :first_row, col_sep: ';') do |row|
-  iramuteq.current_line = row.to_hash
-  iramuteq.write_data!
+  iramuteq = DecidimIramuteq.new(relative_path, core.target_dir)
+
+  CSV.foreach(relative_path, headers: :first_row, col_sep: ';') do |row|
+    iramuteq.current_line = row.to_hash
+    iramuteq.write_data!
+  end
 end
-
-
 
