@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'csv'
-require 'byebug'
 require_relative 'decidim_iramuteq'
 
 file_name = if ARGV.empty?
